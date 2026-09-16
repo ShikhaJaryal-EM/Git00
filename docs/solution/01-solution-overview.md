@@ -1,0 +1,99 @@
+# Solution Overview
+
+## Purpose
+
+Describe the overall solution: what is being built, who it serves, which objectives it satisfies, and how a local design delivers the required capabilities.
+
+## Requirement references
+
+- `01-executive-summary-and-context.md`
+- `02-stakeholders-and-personas.md`
+- `03-business-objectives.md` (BO-1, BO-2, BO-3)
+- `04-scope.md`
+- FR-1.1–FR-5.2
+- NFR-1.1–NFR-4.3
+
+---
+
+## Problem
+
+There is no dedicated local place to keep employee names and status. Teams cannot reliably add people, correct names, mark people inactive, or reuse the same list after the tool is closed.
+
+## Solution summary
+
+v1 is a **local desktop tool** used by one person on one machine. It stores employee records in a **local JSON file**. When the user opens the tool, the list loads from that file. The user can create records, edit names, deactivate, and reactivate. Each successful change is written to the file immediately. After a normal close and reopen, the same list is still there.
+
+```
+┌─────────────────────────────────────────┐
+│              Local machine              │
+│                                         │
+│  ┌─────────────┐    ┌───────────────┐  │
+│  │  Basic UI   │───►│  Application  │  │
+│  │  (list +    │◄───│  logic        │  │
+│  │   forms)    │    └───────┬───────┘  │
+│  └─────────────┘            │           │
+│                     ┌───────▼───────┐  │
+│                     │ employees.json│  │
+│                     │ (local file)  │  │
+│                     └───────────────┘  │
+└─────────────────────────────────────────┘
+
+No network. No cloud. No external service.
+```
+
+**DD-01:** One process holds UI, business rules, and file persistence. That matches local-only operation (NFR-1.1–NFR-1.3) and a small v1 scope.
+
+## Business objectives mapping
+
+| ID | Objective | How the solution satisfies it |
+| --- | --- | --- |
+| BO-1 | Capture first name, last name, and status | Create form and list columns; stored on each record |
+| BO-2 | Create, edit, deactivate, and reactivate locally | Main list plus create/edit forms and status actions (FR-1.1–FR-4.2) |
+| BO-3 | Keep the list after close and reopen | Write the local file on every successful change; load it on startup (NFR-2.1–NFR-2.3) |
+
+## Users
+
+| Attribute | Design |
+| --- | --- |
+| Who | Employee list maintainer (the only v1 persona) |
+| What they do | Create, edit names, deactivate, reactivate, and see the list persist |
+| Access | Full access to all v1 actions; no login |
+| Environment | One person, one local machine |
+
+Viewer and administrator personas are not in v1. There is no view-only mode and no separate admin mode.
+
+## In scope
+
+| Capability | Delivery | Refs |
+| --- | --- | --- |
+| Create employee | Create form: first name, last name, status | FR-1.1–FR-1.3 |
+| Edit names | Edit form: first name and last name only | FR-2.1–FR-2.3 |
+| Deactivate | Action available only for an active employee | FR-3.1–FR-3.2, BR-2.3 |
+| Reactivate | Action available only for an inactive employee | FR-4.1–FR-4.2, BR-2.4 |
+| List | Show first name, last name, and status | FR-5.1–FR-5.2 |
+| Persistence | Local file load on open, save on successful change | NFR-2.1–NFR-2.3 |
+| Basic UI | Working screens for the journeys above | NFR-3.1–NFR-3.2 |
+
+## Out of scope
+
+The design must not introduce:
+
+| Item | Refs |
+| --- | --- |
+| Extra employee fields | Scope |
+| Login, roles, permissions | Scope, stakeholders |
+| Cloud, network, or outside services | NFR-1.2, NFR-1.3 |
+| Multi-user sharing | Assumptions |
+| Search, filters, export, reporting | Scope |
+| Permanent delete | Scope |
+| Visual polish | NFR-3.3 |
+
+## Success
+
+The design is successful when:
+
+1. FR-1.1 through FR-5.2 can be completed in the UI.
+2. BR-1.1 through BR-3.4 are enforced in application logic before persist.
+3. NFR-1.1 through NFR-4.3 are met (local, persistent, basic UI, rejected save does not corrupt the list).
+4. AC-1.1 through AC-6.3 can be demonstrated.
+5. No out-of-scope capability is added.
