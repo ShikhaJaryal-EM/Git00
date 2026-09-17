@@ -4,7 +4,7 @@
 
 To refactor an existing implementation plan to use the Canonical SDLC Phase Shape:
 
-1. **Read the reference**: `docs/implementation/reference/CANONICAL-PHASE-SHAPE.md`
+1. **Read the reference**: `docs/implementation/CANONICAL-PHASE-SHAPE.md`
 2. **Use the Cursor rule**: The `.cursor/rules/canonical-phase-shape.mdc` rule will guide you when editing `implementation-plan.md`
 3. **Follow the template**: Each phase must have all 8 sections in order
 
@@ -163,7 +163,7 @@ Expected:
 When refactoring with AI assistance:
 
 1. **Provide context**: Share the Functional Requirements document
-2. **Show examples**: Reference completed phases from `implementation-plan.md`
+2. **Show examples**: Reference completed phases from `docs/implementation/phases/`
 3. **Iterate**: Refactor one phase at a time, validate, then continue
 4. **Use the rule**: The Cursor rule will guide the AI automatically
 
@@ -220,12 +220,12 @@ Before marking refactoring complete:
 
 After refactoring:
 1. Review with team/stakeholders
-2. Update phase status tracking (`reference/phase-status.md`)
+2. Update phase status tracking (`docs/implementation/phase-status.md`)
 3. Use phases to guide sprint planning
 4. Update phases as requirements evolve
 
 ## References
 
-- **Complete Reference**: `docs/implementation/reference/CANONICAL-PHASE-SHAPE.md`
-- **Example Phases**: `docs/implementation/implementation-plan.md` (Phases 0-7.5)
+- **Complete Reference**: `docs/implementation/CANONICAL-PHASE-SHAPE.md`
+- **Example Phases**: `docs/implementation/phases/PHASE-001.md` through `PHASE-008.md`
 - **Cursor Rule**: `.cursor/rules/canonical-phase-shape.mdc`

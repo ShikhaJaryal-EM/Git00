@@ -30,8 +30,8 @@ Before beginning execution:
 
 ### Phase type
 
-- **Normal phase** (e.g. PHASE-001.1, PHASE-018): Read the full phase specification from `implementation-plan.md` and proceed with Phase Education below.
-- **Bug-fix phase** (e.g. PHASE-BUG-001): This is a bug-fix phase. Load the phase content from the **Bug-fix phases** section of `implementation-plan.md` and the corresponding bug entry in `docs/implementation/bugs-and-issues-log.md`. Use that as the phase specification for Phase Education, Game Plan, Checklist, Definition of Done, and Test Coverage (same structure as a normal phase; scope comes from the bug).
+- **Normal phase** (e.g. PHASE-001, PHASE-008): Read the full phase specification from `docs/implementation/phases/PHASE-00N.md` (index: `docs/implementation/implementation-plan.md`) and proceed with Phase Education below.
+- **Bug-fix phase** (e.g. PHASE-BUG-001): Load `docs/implementation/phases/PHASE-BUG-001.md` (listed in the index) and the corresponding bug entry in `docs/implementation/bugs-and-issues-log.md`.
 
 ### 1. Phase Education
 
@@ -423,7 +423,7 @@ When the user asks to **review bugs** and decide what to fix (e.g. "I'd like to 
 
 1. Generate a full **Phase Bug*n*** (e.g. Phase Bug1 for Bug #1) with the **same structure as a normal phase** in this guide: Phase Identity (Phase ID e.g. `PHASE-BUG-001`, Phase Name, FR Mapping), Goal, Dependencies, Plan, Outcome, Automated Verification (AI Gate), Human Verification (Human Gate), Success Criteria, Traceability (if applicable). Derive content from the bug entry in the bugs-and-issues-log and from the requirements/solution docs it references.
 2. **Do not** add the phase to `implementation-plan.md` yet. Output the full Phase Bug*n* content **in chat** and say: *"I'm about to add the following phase to the implementation plan for your approval. Please review and tell me if you approve or what you'd like changed."*
-3. Only after the user **approves**, add the phase to the **Bug-fix phases** section of `docs/implementation/implementation-plan.md` and add a line to the **Phase index** under "Bug-fix phases" (e.g. **Phase Bug1** — Bug fix: Bug #1 — [short name]).
+3. Only after the user **approves**, add `docs/implementation/phases/PHASE-BUG-nnn.md` and a line to the **Phase index** in `docs/implementation/implementation-plan.md` under "Bug-fix phases".
 4. Ask: "Phase Bug*n* is now in the plan. Do you want to execute Phase Bug*n* now, or proceed to the next regular phase?"
 
 **This section is the source of truth for the bug process.** The implementation plan only stores the resulting Phase Bug*n* entries; it does not define the workflow.
