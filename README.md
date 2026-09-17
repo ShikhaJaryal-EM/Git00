@@ -1,6 +1,6 @@
 # Employee Records Tool
 
-Local tool for keeping employee first name, last name, and status on one machine. v1 is HTML + Bootstrap 5 (files in the repo) on ASP.NET Core 8 Razor Pages. Data will be a local JSON file in later phases. There is no cloud host, no database, and no login.
+Local tool for keeping employee first name, last name, and status on one machine. v1 is HTML + Bootstrap 5 (files in the repo) on ASP.NET Core 8 Razor Pages. Data is a local JSON file. There is no cloud host, no database, and no login.
 
 ## Run
 
@@ -15,6 +15,8 @@ dotnet run --project EmployeeRecordsTool
 
 The process listens on loopback only (`127.0.0.1`). It does not bind `0.0.0.0` or a public URL.
 
+Saved records are written to `%AppData%\EmployeeRecordsTool\employees.json` after each accepted create, name edit, deactivate, or reactivate.
+
 ## Build and test
 
 ```
@@ -24,4 +26,4 @@ dotnet test EmployeeRecordsTool.sln
 
 ## Layout
 
-See `docs/solution/03-tech-stack.md` for the planned project shape. PHASE-001 provides the host, local Bootstrap, empty `Models/`, `Services/`, and `Persistence/` folders, and a placeholder Index page.
+See `docs/solution/03-tech-stack.md`. The host, JSON store, employee service, and list/create/edit pages live in `EmployeeRecordsTool/`.

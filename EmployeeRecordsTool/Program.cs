@@ -1,5 +1,6 @@
 using System.Net;
 using EmployeeRecordsTool.Persistence;
+using EmployeeRecordsTool.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.WebHost.ConfigureKestrel(options =>
 
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IEmployeeStore>(_ => new JsonFileStore(JsonFileStore.GetDefaultFilePath()));
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 var app = builder.Build();
 

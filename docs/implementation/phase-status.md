@@ -6,12 +6,12 @@ Track execution from `docs/implementation/implementation-plan.md`. Specs live in
 | --- | --- | --- | --- | --- | --- |
 | PHASE-001 | Local Host and Project Foundation | [phases/PHASE-001.md](phases/PHASE-001.md) | Completed | 2026-09-17 | |
 | PHASE-002 | Employee Model and JSON File Store | [phases/PHASE-002.md](phases/PHASE-002.md) | Completed | 2026-09-17 | |
-| PHASE-003 | Employee Service — Create and List | [phases/PHASE-003.md](phases/PHASE-003.md) | Not Started | | |
-| PHASE-004 | Employee Service — Edit, Deactivate, Reactivate | [phases/PHASE-004.md](phases/PHASE-004.md) | Not Started | | |
-| PHASE-005 | List Page UI | [phases/PHASE-005.md](phases/PHASE-005.md) | Not Started | | |
-| PHASE-006 | Create and Edit Pages UI | [phases/PHASE-006.md](phases/PHASE-006.md) | Not Started | | |
-| PHASE-007 | Deactivate and Reactivate UI Actions | [phases/PHASE-007.md](phases/PHASE-007.md) | Not Started | | |
-| PHASE-008 | Persistence, Local-Only Operation, and Reliability | [phases/PHASE-008.md](phases/PHASE-008.md) | Not Started | | |
+| PHASE-003 | Employee Service — Create and List | [phases/PHASE-003.md](phases/PHASE-003.md) | Completed | 2026-09-17 | |
+| PHASE-004 | Employee Service — Edit, Deactivate, Reactivate | [phases/PHASE-004.md](phases/PHASE-004.md) | Completed | 2026-09-17 | |
+| PHASE-005 | List Page UI | [phases/PHASE-005.md](phases/PHASE-005.md) | Completed | 2026-09-17 | |
+| PHASE-006 | Create and Edit Pages UI | [phases/PHASE-006.md](phases/PHASE-006.md) | Completed | 2026-09-17 | |
+| PHASE-007 | Deactivate and Reactivate UI Actions | [phases/PHASE-007.md](phases/PHASE-007.md) | Completed | 2026-09-17 | |
+| PHASE-008 | Persistence, Local-Only Operation, and Reliability | [phases/PHASE-008.md](phases/PHASE-008.md) | Completed | 2026-09-17 | |
 
 **Status values:** Not Started, In Progress, Blocked, Completed.
 

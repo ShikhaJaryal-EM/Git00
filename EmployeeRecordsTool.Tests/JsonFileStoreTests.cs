@@ -94,6 +94,38 @@ public class JsonFileStoreTests : IDisposable
         Assert.NotEmpty(exception.Message);
     }
 
+    [Fact]
+    public void Save_WhenWriteFails_DoesNotReportSuccess()
+    {
+        Directory.CreateDirectory(_filePath);
+        var store = new JsonFileStore(_filePath);
+
+        var exception = Assert.Throws<EmployeeStoreException>(() =>
+            store.Save(
+            [
+                new Employee
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    FirstName = "Jane",
+                    LastName = "Smith",
+                    Status = EmployeeStatus.Active
+                }
+            ]));
+
+        Assert.Equal(StoreErrorMessages.SaveFailed, exception.Message);
+    }
+
+    [Fact]
+    public void GetDefaultFilePath_IsUnderAppDataEmployeeRecordsTool()
+    {
+        var path = JsonFileStore.GetDefaultFilePath();
+        var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+        Assert.StartsWith(appData, path, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("EmployeeRecordsTool", path, StringComparison.Ordinal);
+        Assert.EndsWith("employees.json", path, StringComparison.OrdinalIgnoreCase);
+    }
+
     public void Dispose()
     {
         if (Directory.Exists(_directory))
