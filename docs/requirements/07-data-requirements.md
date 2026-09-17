@@ -21,4 +21,6 @@
 - Stored records remain after the tool is closed
 - Stored records are available the next time the tool is opened
 - Persistence is local; no cloud or outside store is required
-- This section states what is saved, not how well it is saved
+- A database server is not required; a local file on the same machine is acceptable
+- A technical record id may be stored so two people with the same name can still be edited; it is not shown to the user
+- This section states what is saved, not how well it is saved. The exact file or store format is a solution choice.

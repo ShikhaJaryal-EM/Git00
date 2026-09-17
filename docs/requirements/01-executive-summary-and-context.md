@@ -10,6 +10,8 @@
 - A basic working interface is required; visual polish is not
 - Security, roles, and permissions are not required
 
+How the tool is built (HTML UI, local host, local file store) is in `docs/solution`. This package states what the tool must do, not the implementation stack.
+
 ## Business Context
 
 - Teams need a reliable record of who is on staff and whether each person is active

@@ -49,3 +49,9 @@
 | AC-6.1 | The tool can be used with no network connection                          |
 | AC-6.2 | The tool does not require a cloud or other outside service               |
 | AC-6.3 | Create, edit, deactivate, and reactivate can be completed in the UI      |
+
+**Notes**
+
+- AC-6.1 is met when create, edit, deactivate, and reactivate work with the internet off.
+- A local page on the same machine does not fail AC-6.2.
+- AC-6.2 fails if a cloud, hosted, or remote service is required, or if a database server off the machine is required.

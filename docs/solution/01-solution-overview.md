@@ -21,27 +21,28 @@ There is no dedicated local place to keep employee names and status. Teams canno
 
 ## Solution summary
 
-v1 is a **local desktop tool** used by one person on one machine. It stores employee records in a **local JSON file**. When the user opens the tool, the list loads from that file. The user can create records, edit names, deactivate, and reactivate. Each successful change is written to the file immediately. After a normal close and reopen, the same list is still there.
+v1 is a **local tool** used by one person on one machine. A local ASP.NET Core process serves **HTML, CSS, and Bootstrap** pages in the browser. Employee records are stored in a **local JSON file** — not a database. When the user opens the list page, records load from that file. The user can create records, edit names, deactivate, and reactivate. Each successful change is written to the file immediately. After the app is stopped and started again, the same list is still there.
 
 ```
-┌─────────────────────────────────────────┐
-│              Local machine              │
-│                                         │
-│  ┌─────────────┐    ┌───────────────┐  │
-│  │  Basic UI   │───►│  Application  │  │
-│  │  (list +    │◄───│  logic        │  │
-│  │   forms)    │    └───────┬───────┘  │
-│  └─────────────┘            │           │
-│                     ┌───────▼───────┐  │
-│                     │ employees.json│  │
-│                     │ (local file)  │  │
-│                     └───────────────┘  │
-└─────────────────────────────────────────┘
+┌───────────────────────────────────────────────┐
+│                 Local machine                 │
+│                                               │
+│  ┌─────────────┐    ┌─────────────────────┐  │
+│  │  Browser    │───►│  ASP.NET Core       │  │
+│  │  HTML/CSS/  │◄───│  Razor Pages +      │  │
+│  │  Bootstrap  │    │  EmployeeService    │  │
+│  └─────────────┘    └──────────┬──────────┘  │
+│                                │              │
+│                       ┌────────▼────────┐     │
+│                       │ employees.json  │     │
+│                       │ (local file)    │     │
+│                       └─────────────────┘     │
+└───────────────────────────────────────────────┘
 
-No network. No cloud. No external service.
+Localhost only. No cloud. No external service. Bootstrap files are local (no CDN).
 ```
 
-**DD-01:** One process holds UI, business rules, and file persistence. That matches local-only operation (NFR-1.1–NFR-1.3) and a small v1 scope.
+**DD-01:** UI pages, business rules, and file persistence run in one local ASP.NET Core process. The browser only talks to `127.0.0.1`. That matches local-only operation (NFR-1.1–NFR-1.3).
 
 ## Business objectives mapping
 
@@ -49,7 +50,7 @@ No network. No cloud. No external service.
 | --- | --- | --- |
 | BO-1 | Capture first name, last name, and status | Create form and list columns; stored on each record |
 | BO-2 | Create, edit, deactivate, and reactivate locally | Main list plus create/edit forms and status actions (FR-1.1–FR-4.2) |
-| BO-3 | Keep the list after close and reopen | Write the local file on every successful change; load it on startup (NFR-2.1–NFR-2.3) |
+| BO-3 | Keep the list after close and reopen | Write the local JSON file on every successful change; load it after process restart (NFR-2.1–NFR-2.3) |
 
 ## Users
 
@@ -71,7 +72,7 @@ Viewer and administrator personas are not in v1. There is no view-only mode and 
 | Deactivate | Action available only for an active employee | FR-3.1–FR-3.2, BR-2.3 |
 | Reactivate | Action available only for an inactive employee | FR-4.1–FR-4.2, BR-2.4 |
 | List | Show first name, last name, and status | FR-5.1–FR-5.2 |
-| Persistence | Local file load on open, save on successful change | NFR-2.1–NFR-2.3 |
+| Persistence | Local JSON file load when the list is shown; save on successful change | NFR-2.1–NFR-2.3 |
 | Basic UI | Working screens for the journeys above | NFR-3.1–NFR-3.2 |
 
 ## Out of scope

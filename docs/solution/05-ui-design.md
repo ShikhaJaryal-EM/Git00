@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define the screens and actions needed for a basic working interface. Visual polish is not required (NFR-3.3). The user must complete create, edit, deactivate, and reactivate from the UI (NFR-3.2, AC-6.3).
+Define the screens and actions needed for a basic working interface. The UI is HTML, CSS, and Bootstrap. Visual polish and custom branding are not required (NFR-3.3). The user must complete create, edit, deactivate, and reactivate from the UI (NFR-3.2, AC-6.3).
 
 ## Requirement references
 
@@ -25,11 +25,11 @@ Define the screens and actions needed for a basic working interface. Visual poli
 
 ## Screens
 
-| Screen | Role | Refs |
-| --- | --- | --- |
-| Main list | Default view on open | FR-5.1 |
-| Create employee | Add first name, last name, status | FR-1.1, FR-1.2 |
-| Edit employee | Change first and last name | FR-2.1, FR-2.2 |
+| Screen | Page | Role | Refs |
+| --- | --- | --- | --- |
+| Main list | `Pages/Index.cshtml` | Employee list + status actions | FR-5.1 |
+| Create employee | `Pages/Create.cshtml` | Add first name, last name, status | FR-1.1, FR-1.2 |
+| Edit employee | `Pages/Edit.cshtml` | Change first and last name | FR-2.1, FR-2.2 |
 
 No login, no settings, no extra navigation.
 
@@ -48,14 +48,14 @@ No login, no settings, no extra navigation.
 └──────────────────────────────────────────────────────────────┘
 ```
 
-| Control | Behaviour | Refs |
-| --- | --- | --- |
-| List | Shows every saved record | FR-5.1, DD-13 |
-| Columns | First name, last name, status | FR-5.2 |
-| Create employee | Opens the create form | FR-1.1 |
-| Edit | Opens the edit form for that row | FR-2.1 |
-| Deactivate | Visible only when status is Active | FR-3.1, BR-2.3 |
-| Reactivate | Visible only when status is Inactive | FR-4.1, BR-2.4 |
+| Control | HTML / Bootstrap | Behaviour | Refs |
+| --- | --- | --- | --- |
+| List | `table.table` | Shows every saved record | FR-5.1, DD-13 |
+| Columns | table headers | First name, last name, status | FR-5.2 |
+| Create employee | `a.btn` / form | Opens the create page | FR-1.1 |
+| Edit | `a.btn btn-secondary` | Opens the edit page for that row | FR-2.1 |
+| Deactivate | `button` POST, only if Active | Marks inactive | FR-3.1, BR-2.3 |
+| Reactivate | `button` POST, only if Inactive | Marks active | FR-4.1, BR-2.4 |
 
 **DD-07:** Edit, Deactivate, and Reactivate are visible buttons, not hidden menus.
 
@@ -81,11 +81,11 @@ No search, filter, sort, or delete controls.
 
 | Field | Notes | Refs |
 | --- | --- | --- |
-| First name | Required | FR-1.2, BR-1.1 |
-| Last name | Required | FR-1.2, BR-1.2 |
-| Status | Active or Inactive; default Active | BR-2.1, BR-2.2, DD-08 |
-| Save | Validate then persist | FR-1.3 |
-| Cancel | Close with no change | — |
+| First name | `input.form-control` — required | FR-1.2, BR-1.1 |
+| Last name | `input.form-control` — required | FR-1.2, BR-1.2 |
+| Status | `select.form-select` — Active or Inactive; default Active | BR-2.1, BR-2.2, DD-08 |
+| Save | `button.btn` — validate then persist | FR-1.3 |
+| Cancel | Link back to the list; no write | — |
 
 **DD-08:** Status defaults to Active. The user may choose Inactive before save (BR-2.2).
 
@@ -110,7 +110,7 @@ Names are pre-filled. **Status is not on this form.** Status changes use Deactiv
 
 | Condition | UI | Refs |
 | --- | --- | --- |
-| Missing or whitespace-only first or last name | Message on the form; form stays open | BR-1.4, BR-3.3 |
+| Missing or whitespace-only first or last name | `text-danger` or `alert alert-danger` on the same page | BR-1.4, BR-3.3 |
 | Rejected create | List unchanged | AC-1.3, AC-1.4, BR-3.4 |
 | Rejected edit | Saved name unchanged | AC-2.3, AC-2.4, BR-3.4 |
 
@@ -119,7 +119,7 @@ Messages use plain language, for example “First name is required.”
 ## Navigation
 
 ```
-Open tool → Main list
+Start local app → open http://127.0.0.1 → Main list
               ├── Create employee → Save or Cancel → Main list
               ├── Edit → Save or Cancel → Main list
               ├── Deactivate → stay on Main list
@@ -136,4 +136,4 @@ Open tool → Main list
 | Manual Save for the whole app | Each accepted change persists immediately |
 | Employee id field | Internal only (DD-04) |
 | Status on edit | FR-2.2 |
-| Theming / branding | NFR-3.3 |
+| Theming / branding | NFR-3.3; Bootstrap default layout only |

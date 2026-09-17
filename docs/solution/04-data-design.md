@@ -17,6 +17,8 @@ Define the employee record, stored fields, JSON schema, persistence rules, and i
 
 One record is one employee. v1 fields are first name, last name, and status. Permanent delete is not required.
 
+**There is no database.** The store is a JSON file on the local disk (`JsonFileStore`). No SQL engine, connection string, or database server is created or used.
+
 The file also stores a system `id` so edit, deactivate, and reactivate target the correct row when two people share a name (**DD-04**, **DD-12**). The id is not shown and is not editable.
 
 ### Logical model
@@ -69,8 +71,8 @@ Serialise with indented JSON so the file is readable on disk. Property names are
 | What is saved | id, first name, last name, status | Data requirements |
 | When saved | After every accepted create, edit, deactivate, or reactivate | NFR-2.1 |
 | How | Rewrite the full file from the in-memory list | DD-05 |
-| Load | On startup, before the list is shown | NFR-2.3 |
-| Local only | No network path and no cloud store | NFR-2.2 |
+| Load | When the list is shown or before a mutation; after process restart the next request reads the file | NFR-2.3 |
+| Local only | No database, no network path, no cloud store | NFR-2.2 |
 | No delete | Deactivate sets status; the record stays in the file | Scope |
 | Rejected change | Validation failure does not call Save | BR-3.4, NFR-4.1 |
 
@@ -119,3 +121,4 @@ Load():
 | Audit history | Not required |
 | User or owner | Single local user; no login |
 | Deleted flag | Status is used instead of delete |
+| Database tables / connection strings | No database in v1 |

@@ -57,14 +57,14 @@ All IDs in `docs/requirements`.
 | ID | Requirement | Solution docs | Tests |
 | --- | --- | --- | --- |
 | NFR-1.1 | Runs on a local machine | 02, 03, 07 | MAT-08 |
-| NFR-1.2 | No network required | 02, 03, 07 | MAT-08 |
+| NFR-1.2 | No network required | 02, 03, 07, 11 (DD-14) | MAT-08 |
 | NFR-1.3 | No cloud or outside service | 02, 03, 07 | MAT-08 |
 | NFR-2.1 | Present after close and reopen | 04, 07 | MAT-01, MAT-03, MAT-05, MAT-06 |
-| NFR-2.2 | Persistence without network or cloud | 04, 07 | MAT-08 plus file on disk |
+| NFR-2.2 | Persistence without network or cloud | 04, 07 — local JSON file, no database | MAT-08 plus file on disk |
 | NFR-2.3 | Normal restart does not lose records | 04, 07 | same as NFR-2.1 |
 | NFR-3.1 | Basic working interface | 05, 07 | MAT-01–MAT-07 |
 | NFR-3.2 | Create, edit, deactivate, reactivate from UI | 05, 07 | MAT-08 |
-| NFR-3.3 | Visual polish not required | 05, 07 | Design review |
+| NFR-3.3 | Visual polish not required | 05, 07, 11 (DD-15) | Design review: default Bootstrap only |
 | NFR-4.1 | Rejected save does not corrupt the list | 08 | MAT-02, MAT-04 |
 | NFR-4.2 | Usable after rejected save | 08 | MAT-02, MAT-04 |
 | NFR-4.3 | Usable after close and reopen | 07, 08 | MAT-01 close/reopen |
@@ -107,10 +107,10 @@ All IDs in `docs/requirements`.
 
 | Question | Resolution | Decision | Docs |
 | --- | --- | --- | --- |
-| Must first name plus last name be unique? | No | DD-12 | 04, 11 |
-| Should the list show inactive employees by default? | Yes, always | DD-13 | 05, 11 |
-| Preferred list order? | Insertion order; no sort UI | DD-06 | 04, 05, 11 |
-| Status editable on create only, or also during edit? | Create can set status; later changes use deactivate/reactivate | DD-08 plus FR-2.2 | 05, 06, 11 |
+| Must first name plus last name be unique? | No | DD-12 | requirements `10`, solution `11` |
+| Should the list show inactive employees by default? | Yes, always | DD-13 | requirements `10`, `05` note, solution `11` |
+| Preferred list order? | Insertion order; no sort UI | DD-06 | requirements `10`, solution `11` |
+| Status editable on create only, or also during edit? | Create can set status; later changes use deactivate/reactivate | DD-08 plus FR-2.2 | requirements `10`, `05` note, solution `11` |
 
 ## Coverage
 
@@ -123,4 +123,4 @@ All IDs in `docs/requirements`.
 | Acceptance criteria | AC-1.1–AC-6.3 | 20 |
 | Open questions | 4 | 4 resolved |
 
-Every authored FR, BR, NFR, and AC is mapped. No extra product capabilities were added to fill gaps.
+Every authored FR, BR, NFR, and AC is mapped. Persistence is a **JSON file**, not a database. The HTML/CSS/Bootstrap UI and localhost host are implementation choices (DD-03, DD-14, DD-15), not extra product features.

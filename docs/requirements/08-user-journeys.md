@@ -5,6 +5,8 @@
 | Step | Actor                      | Action                                      | Result                                      |
 | ---- | -------------------------- | ------------------------------------------- | ------------------------------------------- |
 | 1    | Employee list maintainer   | Opens the tool                              | Existing saved records are shown            |
+
+Opening the tool means starting the local tool and seeing the employee list.
 | 2    | Employee list maintainer   | Starts create                               | Create fields are available                 |
 | 3    | Employee list maintainer   | Enters first name, last name, and status    | Values are ready to save                    |
 | 4    | Employee list maintainer   | Saves the record                            | The new employee appears in the list        |

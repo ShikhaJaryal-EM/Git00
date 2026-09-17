@@ -25,7 +25,7 @@
 | Deactivate                 | An active employee can be marked inactive              |
 | Reactivate                 | An inactive employee can be marked active              |
 | Persist                    | Saved records are still present after close and reopen |
-| Local use                  | The tool works with no network or cloud service        |
+| Local use                  | The tool works with no internet or cloud service       |
 
 ## Priority
 

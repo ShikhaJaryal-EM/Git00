@@ -64,15 +64,15 @@ Refs: BR-2.3, BR-2.4
 
 ## Cancellation
 
-Cancel on create or edit closes the form and writes nothing.
+Cancel on create or edit returns to the list page and writes nothing.
 
 ## File errors
 
 ### Missing file on first run (DD-11)
 
-Create the data folder and an empty `employees.json`. Show an empty list. No error message. The user can create employees immediately.
+Create the data folder and an empty `employees.json`. Show an empty list. No error message. The user can create employees immediately. No database is created.
 
-### Corrupt file on startup (DD-11)
+### Corrupt file on load (DD-11)
 
 Do **not** overwrite or delete the file. Show: “The employee data file could not be read.” Include the file path. Do not accept creates or edits until the file is fixed or replaced. This avoids destroying data that might still be recoverable.
 
@@ -97,7 +97,7 @@ Do not show stack traces or technical codes to the user.
 
 | Error class | Why it does not apply |
 | --- | --- |
-| Network errors | No network (NFR-1.2) |
+| Network errors | No internet or remote services; app uses localhost only (NFR-1.2) |
 | Authentication errors | No login |
 | Concurrent-edit conflicts | One user, one machine |
-| Database connection errors | No database server |
+| Database connection errors | No database is used |

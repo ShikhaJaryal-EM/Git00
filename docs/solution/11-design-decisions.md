@@ -10,19 +10,21 @@ Record design decisions and resolve the open questions in `10-assumptions-constr
 
 | ID | Decision | Rationale | Refs | Docs |
 | --- | --- | --- | --- | --- |
-| DD-01 | Three layers (UI, application, persistence) in one local process | Meets local-only NFRs without a server | NFR-1.1–NFR-1.3 | 01, 02 |
+| DD-01 | Three layers (pages, application, persistence) in one local ASP.NET Core process | Meets local-only NFRs; browser talks only to localhost | NFR-1.1–NFR-1.3 | 01, 02 |
 | DD-02 | JSON file under `%AppData%\EmployeeRecordsTool\` | Local persistence with no database or network | NFR-2.1–NFR-2.2 | 02, 03, 04 |
-| DD-03 | C# / .NET 8 / WinForms / local JSON, with a simple WinForms UI | Meets local-only NFRs and a basic working interface | NFR-1, NFR-2, NFR-3 | `03-tech-stack.md` |
+| DD-03 | HTML + CSS + Bootstrap 5 (local) UI; ASP.NET Core 8 Razor Pages backend; local JSON | Requested simple HTML UI; most compatible local backend | NFR-1, NFR-2, NFR-3 | `03-tech-stack.md` |
 | DD-04 | Hidden system id (GUID) | Needed to edit/deactivate the right row when names are not unique | DD-12 | 04 |
 | DD-05 | Full-file rewrite on each successful save | Simple and enough for a single-user list | NFR-2.1 | 04 |
 | DD-06 | Insertion order; no sort UI | Sort is out of scope; resolves list-order question | Scope | 04, 05 |
-| DD-07 | Visible Edit / Deactivate / Reactivate buttons | Clearer than hidden menus for a basic UI | NFR-3.1 | 05 |
+| DD-07 | Visible Edit / Deactivate / Reactivate buttons on the HTML list | Clearer for a basic UI than hidden menus | NFR-3.1 | 05 |
 | DD-08 | Create status defaults to Active; user may choose Inactive | BR-2.2 | BR-2.2 | 05, 06 |
 | DD-09 | Separate Deactivate and Reactivate labels and availability | Matches BR-2.3 and BR-2.4 (not a generic toggle) | BR-2.3, BR-2.4 | 05 |
 | DD-10 | Windows 10/11 as the v1 OS target | Requirements say “local machine”; Windows is the practical v1 desktop target | NFR-1.1 | 03, 07 |
 | DD-11 | Missing file → empty list; corrupt file → error, keep file | First run vs protect existing data | NFR-4.1 | 08 |
 | DD-12 | First name + last name are **not** unique | Requirements never require uniqueness; known limitation already states two people can look the same | Open questions | 04, 06 |
 | DD-13 | Inactive employees **always** shown in the list | Journeys say the employee remains present after deactivate | User journeys, AC-3.3 | 05, 06 |
+| DD-14 | `127.0.0.1` loopback is allowed; internet, CDN, and remote APIs are not | NFR-1.2 / AC-6.1 mean no network *connection to the outside*; scope forbids hosting/sync/external APIs, not a local browser talking to a local process | NFR-1.2, NFR-1.3, AC-6.1, AC-6.2 | 02, 03, 07 |
+| DD-15 | Default Bootstrap 5 layout is the simple UI; no custom theme or branding | NFR-3.3 and scope forbid visual *polish*; Bootstrap is layout so HTML forms are readable | NFR-3.1, NFR-3.3 | 03, 05 |
 
 ## Resolved open questions
 
@@ -60,6 +62,22 @@ Create and edit do not reject a duplicate name. The hidden id distinguishes reco
 
 **Status:** Resolved
 
+### Localhost HTTP vs “no network” / “no cloud”
+
+**Decision:** The app may use `http://127.0.0.1` so a browser can show HTML pages. It must not use the internet, a CDN, cloud hosting, or a remote API (DD-14).
+
+**Why:** HTML/CSS/Bootstrap needs a local host. Requirements forbid cloud and *outside* services and a *network connection* for using the tool. Loopback is on the same machine. Verify offline (MAT-08).
+
+**Status:** Resolved
+
+### Bootstrap vs “visual polish not required”
+
+**Decision:** Use default Bootstrap 5 from files in the repo. No custom theme, branding, or extra UI kits (DD-15).
+
+**Why:** The requested UI is simple HTML/CSS/Bootstrap. Scope’s “visual design polish” means branding, themes, and refined look — not a readable default layout.
+
+**Status:** Resolved
+
 ## Risks from requirements — design response
 
 | Risk | If it happens | Design response |
@@ -84,9 +102,10 @@ Create and edit do not reject a duplicate name. The hidden id distinguishes reco
 | Additional employee fields | Out of scope |
 | Search and sort options | Out of scope |
 | Permanent delete | Out of scope |
-| Visual design polish | NFR-3.3 |
+| Visual design polish | NFR-3.3; default Bootstrap layout is in v1 (DD-15) |
+| Database server | Not required; JSON file is the store (DD-02) |
 | Multi-user or shared access | Out of scope |
 | Login / roles | Out of scope |
 | macOS / Linux | Not required; v1 is Windows (DD-10) |
 
-No open design blockers remain for implementation planning.
+No open design blockers remain. The stack, persistence, and NFR interpretations above are the ones to implement.

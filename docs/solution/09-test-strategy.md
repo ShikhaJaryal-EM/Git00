@@ -56,14 +56,14 @@ No tests against external services. None exist.
 
 ## Manual acceptance tests
 
-Run against the desktop UI. Network should be off for AC-6.1 / AC-6.2.
+Run against the HTML UI in a local browser. Disconnect the internet for AC-6.1 / AC-6.2; keep the app on localhost. Confirm Bootstrap still loads from local files.
 
 ### MAT-01 Create — success
 
-1. Open the tool.  
+1. Start the local app (`dotnet run`) and open `http://127.0.0.1` in a browser.  
 2. Create an employee with first name, last name, and status.  
 3. Confirm the row appears.  
-4. Close and reopen; the row is still present.
+4. Stop the app, start it again, open the list; the row is still present.
 
 Refs: AC-1.1, AC-1.2, AC-5.1
 
@@ -79,7 +79,7 @@ Refs: AC-1.3, AC-1.4, BR-3.3, BR-3.4
 
 1. Edit first or last name and save.  
 2. Confirm the list shows the new name.  
-3. Close and reopen; the new name is still present.
+3. Stop the app, start it again, open the list; the new name is still present.
 
 Refs: AC-2.1, AC-2.2, AC-5.2
 
@@ -94,7 +94,7 @@ Refs: AC-2.3, AC-2.4
 
 1. Deactivate an active employee.  
 2. Confirm status is Inactive and the row remains.  
-3. Close and reopen; status is still Inactive.
+3. Stop the app, start it again, open the list; status is still Inactive.
 
 Refs: AC-3.1–AC-3.3, AC-5.3
 
@@ -102,21 +102,23 @@ Refs: AC-3.1–AC-3.3, AC-5.3
 
 1. Reactivate an inactive employee.  
 2. Confirm status is Active and the row remains.  
-3. Close and reopen; status is still Active.
+3. Stop the app, start it again, open the list; status is still Active.
 
 Refs: AC-4.1–AC-4.3, AC-5.3
 
 ### MAT-07 List
 
-1. Open the tool with mixed Active and Inactive records.  
+1. Open the list page with mixed Active and Inactive records.  
 2. Confirm each row shows first name, last name, and status, including inactive rows.
 
 Refs: FR-5.1, FR-5.2, DD-13
 
 ### MAT-08 Local operation
 
-1. Disconnect the network.  
-2. Complete create, edit, deactivate, and reactivate in the UI.
+1. Disconnect the internet.  
+2. Confirm pages still load (Bootstrap from local files, not a CDN).  
+3. Complete create, edit, deactivate, and reactivate in the UI.  
+4. Confirm no database server is running or required.
 
 Refs: AC-6.1–AC-6.3, NFR-1.2, NFR-1.3, NFR-3.2
 
@@ -141,13 +143,14 @@ Refs: FR-2.2
 dotnet test
 ```
 
-Expected: all unit tests pass. Then run MAT-01 through MAT-10 on the built executable.
+Expected: all unit tests pass. Then run MAT-01 through MAT-10 against `dotnet run` on localhost.
 
 ## Definition of done (testing)
 
 - [ ] All unit tests pass
 - [ ] MAT-01 through MAT-10 pass
 - [ ] Rejected saves do not change the file
-- [ ] Close/reopen keeps creates, edits, and status changes
-- [ ] Tool works with no network
+- [ ] Close/reopen (process restart) keeps creates, edits, and status changes
+- [ ] Tool works with no internet; Bootstrap is local
+- [ ] No database is used
 - [ ] No delete control in the UI

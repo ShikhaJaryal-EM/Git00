@@ -23,6 +23,8 @@ The person who keeps the local employee list up to date.
 | Reactivate  | Mark an employee active again               |
 | Persist     | See the same list after closing the tool    |
 
+Closing the tool means stopping it and opening it again in a later local session.
+
 **Not in v1**
 
 | Persona        | Why not                    |

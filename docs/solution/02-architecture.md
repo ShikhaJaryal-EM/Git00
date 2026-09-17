@@ -28,35 +28,33 @@ Define components, layers, communication, and data flows for create, edit, deact
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│                 Employee Records Tool                    │
+│              Local machine (localhost only)              │
 │                                                          │
 │  ┌────────────────────────────────────────────────────┐  │
-│  │                   UI layer                         │  │
-│  │  Main list                                         │  │
-│  │    ├── Create form                                 │  │
-│  │    └── Edit form                                   │  │
+│  │  Browser — HTML + CSS + Bootstrap                  │  │
+│  │  List page / Create page / Edit page               │  │
 │  └───────────────────────┬────────────────────────────┘  │
-│                          │                               │
+│                          │ HTTP to 127.0.0.1             │
 │  ┌───────────────────────▼────────────────────────────┐  │
-│  │              Application layer                     │  │
-│  │  EmployeeService                                   │  │
-│  │    Create / UpdateNames / Deactivate /             │  │
-│  │    Reactivate / List / Validate                    │  │
-│  └───────────────────────┬────────────────────────────┘  │
-│                          │                               │
-│  ┌───────────────────────▼────────────────────────────┐  │
-│  │              Persistence layer                     │  │
-│  │  JsonFileStore                                     │  │
-│  │    Load on startup / Save after accepted change    │  │
-│  └───────────────────────┬────────────────────────────┘  │
-└──────────────────────────┼───────────────────────────────┘
-                           │
-                  ┌────────▼────────┐
-                  │ employees.json  │
-                  └─────────────────┘
+│  │              ASP.NET Core (Kestrel)                │  │
+│  │  ┌──────────────────────────────────────────────┐  │  │
+│  │  │ UI layer — Razor Pages                       │  │  │
+│  │  └──────────────────────┬───────────────────────┘  │  │
+│  │  ┌──────────────────────▼───────────────────────┐  │  │
+│  │  │ Application — EmployeeService                │  │  │
+│  │  └──────────────────────┬───────────────────────┘  │  │
+│  │  ┌──────────────────────▼───────────────────────┐  │  │
+│  │  │ Persistence — JsonFileStore                  │  │  │
+│  │  └──────────────────────┬───────────────────────┘  │  │
+│  └─────────────────────────┼──────────────────────────┘  │
+└────────────────────────────┼─────────────────────────────┘
+                             │
+                    ┌────────▼────────┐
+                    │ employees.json  │
+                    └─────────────────┘
 ```
 
-**DD-01:** Three logical layers inside one desktop process. No network boundary and no separate server.
+**DD-01:** Three logical layers inside one local ASP.NET Core process. The browser is a view over localhost; there is no cloud or separate database server.
 
 ## Component overview
 
@@ -64,14 +62,14 @@ Define components, layers, communication, and data flows for create, edit, deact
 
 | Component | Responsibility | Refs |
 | --- | --- | --- |
-| Main list | Shows saved records on open | FR-5.1, FR-5.2 |
-| Create action | Opens create fields | FR-1.1 |
-| Edit action | Opens an existing record for name change | FR-2.1 |
-| Deactivate action | Shown only when status is active | FR-3.1, BR-2.3 |
-| Reactivate action | Shown only when status is inactive | FR-4.1, BR-2.4 |
-| Create form | First name, last name, status | FR-1.2, BR-2.2 |
-| Edit form | First name and last name only | FR-2.2 |
-| Rejection message | Tells the user when create or edit is rejected | BR-3.3 |
+| Main list | `Index` Razor Page — HTML table of saved records | FR-5.1, FR-5.2 |
+| Create action | Link/button to Create page | FR-1.1 |
+| Edit action | Link to Edit page for that record | FR-2.1 |
+| Deactivate action | POST from the list; shown only when status is active | FR-3.1, BR-2.3 |
+| Reactivate action | POST from the list; shown only when status is inactive | FR-4.1, BR-2.4 |
+| Create form | HTML form: first name, last name, status | FR-1.2, BR-2.2 |
+| Edit form | HTML form: first name and last name only | FR-2.2 |
+| Rejection message | Bootstrap alert / field error on the page | BR-3.3 |
 
 No login screen, no settings screen, no navigation beyond list and forms (NFR-3.1).
 
@@ -92,9 +90,10 @@ There is no delete operation.
 
 | Operation | Responsibility | Refs |
 | --- | --- | --- |
-| `Load` | Read the local file on startup | NFR-2.1, NFR-2.3 |
+| `Load` | Read the local JSON file when data is needed (list page or before a mutation) | NFR-2.1, NFR-2.3 |
 | `Save` | Write the full list after an accepted mutation | NFR-2.1–NFR-2.2 |
-| Path | Per-user local folder (see `03-tech-stack.md`) | NFR-1.1 |
+| Path | `%AppData%\EmployeeRecordsTool\employees.json` (see `03-tech-stack.md`) | NFR-1.1 |
+| Database | None — no SQL engine and no DB server | NFR-1.3, DD-02 |
 
 Missing file on first run creates an empty list. A corrupt file is not overwritten (`08-error-handling.md`).
 
@@ -102,21 +101,21 @@ Missing file on first run creates an empty list. A corrupt file is not overwritt
 
 | Aspect | Design | Refs |
 | --- | --- | --- |
-| Delivery | Self-contained local executable | NFR-1.1 |
+| Delivery | Local `dotnet run` or self-contained publish; open `http://127.0.0.1` | NFR-1.1 |
 | Data | Local JSON file on the same machine | NFR-1.2, NFR-1.3 |
-| Network | Not used | NFR-1.2, AC-6.1, AC-6.2 |
-| Install | Copy and run; no outside service | NFR-1.3 |
+| Network | Loopback only; no internet; no CDN | NFR-1.2, AC-6.1, AC-6.2 |
+| Install | Run on the local machine; no outside service | NFR-1.3 |
 
 ## Data flows
 
 ### Open tool / list (journey start)
 
 ```
-User opens the tool
-  → UI starts
+User starts the local app and opens the list page in the browser
+  → Razor Page handler
     → JsonFileStore.Load()
       → EmployeeService.List()
-        → Main list shows first name, last name, status
+        → HTML table shows first name, last name, status
 ```
 
 ### Create

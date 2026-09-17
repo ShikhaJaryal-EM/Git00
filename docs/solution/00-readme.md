@@ -4,7 +4,9 @@
 
 This package describes **how** the Employee Records Tool will be built. It translates `docs/requirements` into an implementable design: architecture, technology, data, UI, behaviour, non-functional approach, errors, tests, and decisions.
 
-**Requirements are the source of truth.** This design must satisfy them as written. It must not add login, roles, cloud, network services, extra employee fields, search/export, visual polish, or permanent delete.
+**Requirements are the source of truth.** This design must satisfy them as written. It must not add login, roles, cloud, hosted or external network services, extra employee fields, search/export, custom visual polish, or permanent delete.
+
+There is **no database**. Employee data is a local JSON file.
 
 ## Document map
 
@@ -40,12 +42,13 @@ Cite requirement IDs exactly as authored. Do not invent, merge, or split FRs.
 
 | Constraint from requirements | Design response |
 | --- | --- |
-| Local machine only | Single-process desktop app; no server, no HTTP, no cloud |
-| No network or outside service | All reads/writes to a local file |
-| No login, roles, or permissions | Open the tool; full access |
+| Local machine only | Local ASP.NET Core app on localhost; HTML/CSS/Bootstrap UI; no cloud |
+| No network or outside service | Localhost only; local JSON; Bootstrap files in the repo (no CDN) |
+| No database | One local JSON file; no SQL Server, SQLite, or other DB |
+| No login, roles, or permissions | Open the list page; full access |
 | First name, last name, status only | No extra fields in UI or file |
 | No permanent delete | Deactivate / reactivate only |
-| Basic working UI | Plain forms and a list; no polish |
+| Basic working UI | HTML/CSS/Bootstrap list and forms; no custom branding (DD-15) |
 | Rejected save must not change the list | Validate before persist; show a message |
 
 ## Out of scope (must not be added by design)
@@ -53,6 +56,7 @@ Cite requirement IDs exactly as authored. Do not invent, merge, or split FRs.
 - Extra employee fields (email, phone, title, photo)
 - Security, login, roles, permissions
 - Cloud, sync, external APIs, or multi-user sharing
+- Database servers (SQL Server, MariaDB, SQLite as a product dependency)
 - Advanced search, filters, export, reporting
 - Permanent delete
-- Visual design polish
+- Custom visual design polish (branding, themes). Default Bootstrap layout is allowed (DD-15).
