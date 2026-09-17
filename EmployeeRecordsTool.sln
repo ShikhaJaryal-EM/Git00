@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeRecordsTool", "EmployeeRecordsTool\EmployeeRecordsTool.csproj", "{5ECC4D96-A675-4CCA-8C8E-7D65FEDE4A7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeRecordsTool.Tests", "EmployeeRecordsTool.Tests\EmployeeRecordsTool.Tests.csproj", "{CAB95DF2-DD8B-4594-B848-3B2411256C84}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5ECC4D96-A675-4CCA-8C8E-7D65FEDE4A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ECC4D96-A675-4CCA-8C8E-7D65FEDE4A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ECC4D96-A675-4CCA-8C8E-7D65FEDE4A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ECC4D96-A675-4CCA-8C8E-7D65FEDE4A7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAB95DF2-DD8B-4594-B848-3B2411256C84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAB95DF2-DD8B-4594-B848-3B2411256C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAB95DF2-DD8B-4594-B848-3B2411256C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAB95DF2-DD8B-4594-B848-3B2411256C84}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
