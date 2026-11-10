@@ -16,7 +16,7 @@ A teapot whistled once, then twice, then not at all.
 
 ## Line 4
 
-Maple leaves scattered across the sidewalk in uneven stripes.
+Maple leaves scattered across the sidewalk in uneven stripessss.
 
 
 
