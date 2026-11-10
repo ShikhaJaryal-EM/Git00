@@ -18,6 +18,5 @@ A teapot whistled once, then twice, then not at all.
 
 Maple leaves scattered across the sidewalk in uneven stripes.
 
-## Line 5
 
-Somewhere nearby, a radio played a song nobody recognized.
+
